@@ -6,7 +6,7 @@ namespace SimplyBooksBE.Models
     public class Books
     {
         [Key]
-        required public string uid { get; set; }
+        public string uid { get; set; }
         public string? AuthorId { get; set; } // Foreign key to Authors
         public Authors? Author { get; set; }
         public string? firebaseKey { get; set; }
