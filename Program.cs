@@ -88,11 +88,25 @@ app.MapGet("/api/books", async (IBooksRepository repo) =>
 
 });
 
+// Get Book by ID
+app.MapGet("/api/books/{uid}", async (IBooksRepository repo, string uid) =>
+{
+    var book = await repo.GetByIdAsync(uid);
+    return book != null ? Results.Ok(book) : Results.NotFound($"Book with uid {uid} not found");
+});
+
 // Get All Authors
 app.MapGet("/api/authors", async (IAuthorsRepository repo) =>
 {
     var authors = await repo.GetAllAsync();
     return authors.Any() ? Results.Ok(authors) : Results.NotFound("No authors found");
+});
+
+// Get Author by ID
+app.MapGet("/api/authors/{uid}", async (IAuthorsRepository repo, string uid) =>
+{
+    var author = await repo.GetByIdAsync(uid);
+    return author != null ? Results.Ok(author) : Results.NotFound($"Author with uid {uid} not found");
 });
 
 // ************************************************** PUT API CALL ************************************************** //
