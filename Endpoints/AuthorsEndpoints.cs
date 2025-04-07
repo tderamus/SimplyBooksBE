@@ -35,6 +35,14 @@ namespace SimplyBooksBE.Endpoints
                 return authors.Any() ? Results.Ok(authors) : Results.NotFound("No authors found");
             });
 
+            // Get Favorite Authors
+            endpoints.MapGet("/api/authors/favorites", async (IAuthorsRepository repo) =>
+            {
+                var authors = await repo.GetAllAsync();
+                var favoriteAuthors = authors.Where(a => a.favorite).ToList();
+                return favoriteAuthors.Any() ? Results.Ok(favoriteAuthors) : Results.NotFound("No favorite authors found");
+            });
+
             // Update Author
             endpoints.MapPut("/api/authors/{uid}", async (IAuthorsRepository repo, string uid, Authors updatedAuthor) =>
             {

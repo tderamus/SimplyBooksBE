@@ -34,6 +34,14 @@ namespace SimplyBooksBE.Endpoints
                 return books.Any() ? Results.Ok(books) : Results.NotFound("No books found");
             });
 
+            // Get Books On Sale
+            endpoints.MapGet("/api/books/sale", async (IBooksRepository repo) =>
+            {
+                var booksOnSale = await repo.GetAllAsync();
+                var books = booksOnSale.Where(b => b.sale).ToList();
+                return books.Any() ? Results.Ok(books) : Results.NotFound("No books on sale found");
+            });
+
             // Update Book
             endpoints.MapPut("/api/books/{uid}", async (IBooksRepository repo, string uid, Books updatedBook) =>
             {
