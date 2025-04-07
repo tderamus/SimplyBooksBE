@@ -68,6 +68,18 @@ namespace SimplyBooksBE.Endpoints
                 await repo.DeleteAsync(uid);
                 return Results.Ok($"Author with uid {uid} deleted successfully");
             });
+
+            // Remove associated books from author before deleting it
+            endpoints.MapDelete("/api/authors/{uid}/remove-books", async (IAuthorsRepository repo, string uid) =>
+            {
+                var author = await repo.GetByIdAsync(uid);
+                if (author == null)
+                    return Results.NotFound($"Author with uid {uid} not found");
+                // Remove all associated books
+                author.Books?.Clear(); // Clear the navigation property
+                await repo.UpdateAsync(author); // Save changes to the author
+                return Results.Ok($"All books associated with author {uid} have been removed.");
+            });
         }
     }
 }
