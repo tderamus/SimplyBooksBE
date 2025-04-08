@@ -15,8 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddNpgsql<SimplyBooksDbContext>(builder.Configuration["SimplyBooksDbConnectionString"]);
-builder.Services.AddScoped<IAuthorsRepository, IAuthorService>();
-builder.Services.AddScoped<IBooksRepository, IBookService>();
+builder.Services.AddScoped<IAuthorsRepository, AuthorService>();
+builder.Services.AddScoped<IBooksRepository, BookService>();
 
 
 // Set the JSON serializer options
