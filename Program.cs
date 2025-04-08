@@ -4,7 +4,8 @@ using SimplyBooksBE.Models;
 using SimplyBooksBE.Repositories;
 using SimplyBooksBE.Endpoints;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json; // For JsonOptions
+using Microsoft.AspNetCore.Http.Json;
+using SimplyBooksBE.Services; // For JsonOptions
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddNpgsql<SimplyBooksDbContext>(builder.Configuration["SimplyBooksDbConnectionString"]);
-builder.Services.AddScoped<IAuthorsRepository, AuthorsRepository>();
-builder.Services.AddScoped<IBooksRepository, BooksRepository>();
+builder.Services.AddScoped<IAuthorsRepository, AuthorService>();
+builder.Services.AddScoped<IBooksRepository, BookService>();
+
 
 // Set the JSON serializer options
 builder.Services.Configure<JsonOptions>(options =>
